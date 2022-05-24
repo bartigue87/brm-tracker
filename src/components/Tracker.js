@@ -118,22 +118,22 @@ export default function Tracker(props) {
 
   return (
     <>
-      <div className="container">
-        <h1>{props.title}</h1>
-        <h4>Current Balance</h4>
-        <h1 id="balance">{totals.currentBalance}</h1>
+      <div className="brm-container">
+        <h1 className="site">{props.title}</h1>
+        <h3>Current Balance</h3>
+        <h1 className="balance">{totals.currentBalance}</h1>
 
         <div className="inc-exp-container">
           <div>
-            <h4>Deposits</h4>
+            <h5>Deposits</h5>
             <p className="money minus">{totals.deposit}</p>
           </div>
           <div>
-            <h4>Withdrawals</h4>
+            <h5>Withdrawals</h5>
             <p className="money plus">{totals.withdrawals}</p>
           </div>
           <div>
-            <h4>Net</h4>
+            <h5>Net</h5>
             <p className="money" style={netColor}>
               {totals.net}
             </p>
@@ -148,7 +148,7 @@ export default function Tracker(props) {
         <h3>Add transaction</h3>
         <form id="form" onSubmit={updateBalance}>
           <div className="form-control">
-            <label htmlFor="deposit">Deposit?</label>
+            <label htmlFor="deposit">Deposit</label>
             <input
               type="number"
               onChange={handleChange}
@@ -158,7 +158,7 @@ export default function Tracker(props) {
             />
           </div>
           <div className="form-control">
-            <label htmlFor="withdrawals">Withdrawal?</label>
+            <label htmlFor="withdrawals">Withdrawal</label>
             <input
               name="withdrawals"
               type="number"
@@ -173,11 +173,11 @@ export default function Tracker(props) {
               name="endOfDayBalance"
               type="number"
               onChange={handleChange}
-              placeholder="Enter the amount of money currently in your account"
+              placeholder="Enter the amount of money in your account"
               value={formData.endOfDayBalance}
             />
           </div>
-          <button className="btn">Update balance</button>
+          <button className="button">Update balance</button>
         </form>
       </div>
     </>

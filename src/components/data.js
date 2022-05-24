@@ -53,15 +53,6 @@ const data = [
     currentBalance: 0,
     history: [],
   },
-  {
-    id: 6,
-    title: "Betcha",
-    deposit: 0,
-    withdrawals: 0,
-    net: 0,
-    currentBalance: 0,
-    history: [],
-  },
 ];
 
 export default data;
