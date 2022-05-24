@@ -1,10 +1,11 @@
 import React from "react";
 import Portfolio from "./components/Portfolio";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    < >
-      <h1>Bankroll Management</h1>
+    <>
+      <Navbar />
       <div className="App">
         <Portfolio />
       </div>

@@ -9,6 +9,7 @@ export default function Portfolio() {
 
   return (
     <>
+      <h1 className="portfolio-header">Bankroll Management</h1>
       <section className="section-container">{tracker}</section>
     </>
   );
