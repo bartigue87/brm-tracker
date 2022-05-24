@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/brm-tracker/static/css/main.6c3bc6f5.css",
+    "main.js": "/brm-tracker/static/js/main.ee68c1dc.js",
+    "index.html": "/brm-tracker/index.html",
+    "main.6c3bc6f5.css.map": "/brm-tracker/static/css/main.6c3bc6f5.css.map",
+    "main.ee68c1dc.js.map": "/brm-tracker/static/js/main.ee68c1dc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c3bc6f5.css",
+    "static/js/main.ee68c1dc.js"
+  ]
+}
