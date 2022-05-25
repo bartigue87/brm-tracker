@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import trashIcon from "../images/trash-svgrepo-com.svg";
+import editIcon from "../images/edit-svgrepo-com.svg";
 
 export default function Tracker(props) {
   const [formData, setFormData] = useState({
@@ -119,6 +121,11 @@ export default function Tracker(props) {
   return (
     <>
       <div className="brm-container">
+        <div className="top-right">
+          <img className="del-btn" src={trashIcon} alt="trashcan" />
+          <img className="edit-btn" src={editIcon} alt="pencil" />
+        </div>
+
         <h1 className="site">{props.title}</h1>
         <h3>Current Balance</h3>
         <h1 className="balance">{totals.currentBalance}</h1>
@@ -146,7 +153,7 @@ export default function Tracker(props) {
         </ul>
 
         <h3>Add transaction</h3>
-        <form id="form" onSubmit={updateBalance}>
+        <form className="form" onSubmit={updateBalance}>
           <div className="form-control">
             <label htmlFor="deposit">Deposit</label>
             <input

@@ -9,6 +9,7 @@
 body {
   margin: 0;
   background-color: #23212c;
+  overflow-x: hidden;
 }
 
 .brm-container {
@@ -19,6 +20,7 @@ body {
   border: 1px solid black;
   border-radius: 20px;
   font-family: "Signika Negative", sans-serif;
+  position: relative;
 }
 
 .site {
@@ -172,8 +174,12 @@ input[type="number"] {
   padding: 20px 40px;
   align-items: center;
   color: #fcb43a;
-  border-bottom: 1px solid #fcb43a;
+  border-bottom: 1px solid black;
   font-family: "Odibee Sans", cursive;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .nav-container h1 {
@@ -183,6 +189,7 @@ input[type="number"] {
 .nav-list {
   display: flex;
   list-style: none;
+  margin: 0;
   gap: 40px;
   font-size: 1.5rem;
 }
@@ -190,7 +197,7 @@ input[type="number"] {
 .portfolio-header {
   color: whitesmoke;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 150px;
   font-family: "Odibee Sans", cursive;
   font-size: 3rem;
   text-decoration: underline;
@@ -200,6 +207,29 @@ input[type="number"] {
 .form-control {
   margin-bottom: 10px;
   padding: 0 10px 15px 10px;
+}
+
+.top-right {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 20px;
+}
+
+.del-btn {
+  height: 20px;
+}
+
+.edit-btn {
+  height: 20px;
+}
+
+.icon {
+  display: none;
+}
+
+.inactive {
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -216,11 +246,13 @@ input[type="number"] {
   }
 
   .nav-list {
-    display: initial;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
   }
 
   .portfolio-header {
-    margin: 30px 0 20px;
+    margin: 115px 0 20px;
     font-size: 2rem;
   }
 
@@ -246,5 +278,35 @@ input[type="number"] {
 
   .button {
     margin-bottom: 10px;
+  }
+
+  .inactive {
+    display: block;
+    position: fixed;
+    top: 79px;
+    right: 0;
+    height: 100vh;
+    width: 50%;
+    background-color: rgb(35 33 44 / 97%);
+    padding: min(30vh, 10rem) 2em;
+    flex-direction: column;
+    backdrop-filter: blur(0.5rem);
+    transform: translateX(100%);
+    transition: transform 350ms ease-in;
+  }
+
+  .icon {
+    display: block;
+    position: absolute;
+    z-index: 999;
+    width: 2rem;
+    border: 0;
+    aspect-ratio: 1;
+    top: 2rem;
+    right: 2rem;
+  }
+
+  .active {
+    display: none;
   }
 }
