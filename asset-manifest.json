@@ -1,13 +1,17 @@
 {
   "files": {
-    "main.css": "/brm-tracker/static/css/main.6c3bc6f5.css",
-    "main.js": "/brm-tracker/static/js/main.ee68c1dc.js",
+    "main.css": "/brm-tracker/static/css/main.6a6c74ae.css",
+    "main.js": "/brm-tracker/static/js/main.c8319702.js",
+    "static/media/edit-svgrepo-com.svg": "/brm-tracker/static/media/edit-svgrepo-com.066b83c066aca090b8c49ef6707f9b9c.svg",
+    "static/media/trash-svgrepo-com.svg": "/brm-tracker/static/media/trash-svgrepo-com.3dbfb9c16c439286c0f827614e292af8.svg",
     "index.html": "/brm-tracker/index.html",
-    "main.6c3bc6f5.css.map": "/brm-tracker/static/css/main.6c3bc6f5.css.map",
-    "main.ee68c1dc.js.map": "/brm-tracker/static/js/main.ee68c1dc.js.map"
+    "static/media/icon-close.svg": "/brm-tracker/static/media/icon-close.d47fda63cbd8b3fedbbc1b2a53f64470.svg",
+    "static/media/icon-hamburger.svg": "/brm-tracker/static/media/icon-hamburger.5273efa7c50e96ef3e51e7a2b54048ce.svg",
+    "main.6a6c74ae.css.map": "/brm-tracker/static/css/main.6a6c74ae.css.map",
+    "main.c8319702.js.map": "/brm-tracker/static/js/main.c8319702.js.map"
   },
   "entrypoints": [
-    "static/css/main.6c3bc6f5.css",
-    "static/js/main.ee68c1dc.js"
+    "static/css/main.6a6c74ae.css",
+    "static/js/main.c8319702.js"
   ]
 }
