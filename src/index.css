@@ -232,6 +232,10 @@ input[type="number"] {
   display: none;
 }
 
+.total-bank {
+  width: 80%;
+  margin: 50px auto;
+}
 @media screen and (max-width: 768px) {
   .brm-container {
     margin: 10px auto;
@@ -249,6 +253,7 @@ input[type="number"] {
     display: flex;
     flex-direction: column;
     padding: 0;
+    font-size: 1.7rem;
   }
 
   .portfolio-header {
@@ -286,7 +291,7 @@ input[type="number"] {
     top: 79px;
     right: 0;
     height: 100vh;
-    width: 50%;
+    width: 70%;
     background-color: rgb(35 33 44 / 97%);
     padding: min(30vh, 10rem) 2em;
     flex-direction: column;
@@ -295,18 +300,27 @@ input[type="number"] {
     transition: transform 350ms ease-in;
   }
 
+  .site {
+    max-width: 200px;
+  }
+
   .icon {
     display: block;
     position: absolute;
     z-index: 999;
     width: 2rem;
     border: 0;
-    aspect-ratio: 1;
+    height: 30%;
     top: 2rem;
     right: 2rem;
   }
 
   .active {
     display: none;
+  }
+
+  .total-bank {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }

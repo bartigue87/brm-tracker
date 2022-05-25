@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import trashIcon from "../images/trash-svgrepo-com.svg";
 import editIcon from "../images/edit-svgrepo-com.svg";
 
+
 export default function Tracker(props) {
   const [formData, setFormData] = useState({
     deposit: "",
@@ -14,7 +15,6 @@ export default function Tracker(props) {
     withdrawals: props.withdrawals,
     net: props.net,
   });
-
   const [historyTotal, setHistoryTotal] = useState(props.history);
 
   const currentYear = new Date().getFullYear();

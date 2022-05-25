@@ -1,6 +1,9 @@
 import React from "react";
 import data from "./data";
 import Tracker from "./Tracker";
+import TotalBank from "./TotalBank";
+import { TotalProvider } from "./TotalContext";
+import Navbar from "./Navbar";
 
 export default function Portfolio() {
   const tracker = data.map((tracker) => {
@@ -9,7 +12,11 @@ export default function Portfolio() {
 
   return (
     <>
-      <h1 className="portfolio-header">Bankroll Management</h1>
+      <Navbar />
+      <h1 className="portfolio-header">Bankroll Manager</h1>
+      <TotalProvider>
+        <TotalBank />
+      </TotalProvider>
       <section className="section-container">{tracker}</section>
     </>
   );
