@@ -153,7 +153,7 @@ export default function Tracker(props) {
         </ul>
 
         <h3>Add transaction</h3>
-        <form className="form" onSubmit={updateBalance}>
+        <form className="form" onSubmit={updateBalance} action="/" method="post">
           <div className="form-control">
             <label htmlFor="deposit">Deposit</label>
             <input
@@ -184,7 +184,7 @@ export default function Tracker(props) {
               value={formData.endOfDayBalance}
             />
           </div>
-          <button className="button">Update balance</button>
+          <button type="submit" className="button">Update balance</button>
         </form>
       </div>
     </>

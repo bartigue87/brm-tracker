@@ -252,6 +252,7 @@ input[type="number"] {
   .nav-list {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     padding: 0;
     font-size: 1.7rem;
   }
@@ -293,7 +294,7 @@ input[type="number"] {
     height: 100vh;
     width: 70%;
     background-color: rgb(35 33 44 / 97%);
-    padding: min(30vh, 10rem) 2em;
+    padding: min(10vh, 10rem) 2em;
     flex-direction: column;
     backdrop-filter: blur(0.5rem);
     transform: translateX(100%);
