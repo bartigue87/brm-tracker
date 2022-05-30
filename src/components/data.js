@@ -44,15 +44,15 @@ const data = [
     currentBalance: 0,
     history: [],
   },
-  {
-    id: 5,
-    title: "Monkey Knife Fight",
-    deposit: 0,
-    withdrawals: 0,
-    net: 0,
-    currentBalance: 0,
-    history: [],
-  },
+  // {
+  //   id: 5,
+  //   title: "Monkey Knife Fight",
+  //   deposit: 0,
+  //   withdrawals: 0,
+  //   net: 0,
+  //   currentBalance: 0,
+  //   history: [],
+  // },
 ];
 
 export default data;

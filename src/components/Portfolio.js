@@ -4,6 +4,7 @@ import Tracker from "./Tracker";
 import TotalBank from "./TotalBank";
 import { TotalProvider } from "./TotalContext";
 import Navbar from "./Navbar";
+import AddTracker from "./AddTracker";
 
 export default function Portfolio() {
   const tracker = data.map((tracker) => {
@@ -17,7 +18,10 @@ export default function Portfolio() {
       <TotalProvider>
         <TotalBank />
       </TotalProvider>
-      <section className="section-container">{tracker}</section>
+      <section className="section-container">
+        {tracker}
+        <AddTracker />
+      </section>
     </>
   );
 }
