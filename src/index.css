@@ -248,6 +248,38 @@ input[type="number"] {
   align-self: center;
 }
 
+.footer {
+  text-align: center;
+  background-color: #23212d;
+  border-top: 1px solid black;
+  margin: 0;
+}
+
+.footer__social-links {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1.5rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+.add-new-tracker {
+  height: 100%;
+  width: 100%;
+  background-color: azure;
+  position: absolute;
+  z-index: 100;
+  visibility: hidden;
+}
+
+.footer__social-link-item:not(:last-of-type) {
+  margin-right: 2rem;
+}
+
+.footer__social-image {
+  height: 4rem;
+}
+
 @media screen and (max-width: 768px) {
   .brm-container {
     margin: 10px auto;
@@ -335,5 +367,9 @@ input[type="number"] {
   .total-bank {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__social-image {
+    height: 2rem;
   }
 }

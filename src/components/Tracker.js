@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import trashIcon from "../images/trash-svgrepo-com.svg";
 import editIcon from "../images/edit-svgrepo-com.svg";
 
-
 export default function Tracker(props) {
   const [formData, setFormData] = useState({
     deposit: "",
@@ -56,6 +55,11 @@ export default function Tracker(props) {
     } else {
       alert(`Please enter a value for each field in ${props.title}.`);
     }
+    setFormData({
+      deposit: "",
+      withdrawals: "",
+      endOfDayBalance: "",
+    });
   }
 
   function updateHistory() {
@@ -153,7 +157,12 @@ export default function Tracker(props) {
         </ul>
 
         <h3>Add transaction</h3>
-        <form className="form" onSubmit={updateBalance} action="/" method="post">
+        <form
+          className="form"
+          onSubmit={updateBalance}
+          action="/"
+          method="post"
+        >
           <div className="form-control">
             <label htmlFor="deposit">Deposit</label>
             <input
@@ -184,7 +193,9 @@ export default function Tracker(props) {
               value={formData.endOfDayBalance}
             />
           </div>
-          <button type="submit" className="button">Update balance</button>
+          <button type="submit" className="button">
+            Update balance
+          </button>
         </form>
       </div>
     </>
