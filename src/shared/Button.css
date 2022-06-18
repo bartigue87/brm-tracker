@@ -1,0 +1,63 @@
+.button {
+  cursor: pointer;
+  background-color: #5d6e77;
+  box-shadow: var(--box-shadow);
+  color: #fff;
+  border: 0;
+  display: block;
+  font-size: 1rem;
+  margin: 10px 0 30px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:hover,
+.button:active {
+  background: #fcb43a;
+  border-color: hsl(10, 79%, 65%);
+  color: black;
+}
+
+.button--inverse {
+  background: transparent;
+  color: hsl(10, 79%, 65%);
+}
+
+.button--inverse:hover,
+.button--inverse:active {
+  color: white;
+  background: hsl(10, 79%, 65%);
+}
+
+.button--danger {
+  background: #830000;
+  border-color: #830000;
+}
+
+.button--danger:hover,
+.button--danger:active {
+  background: #f34343;
+  border-color: #f34343;
+}
+
+.button:disabled,
+.button:hover:disabled,
+.button:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button--small {
+  font-size: 0.8rem;
+}
+
+.button--big {
+  font-size: 1.5rem;
+}

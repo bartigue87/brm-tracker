@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import hamburgerIcon from "../images/icon-hamburger.svg";
 import closeIcon from "../images/icon-close.svg";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../util/auth-context";
 
 export default function Navbar() {
+  const auth = useContext(AuthContext);
+  let navigate = useNavigate();
+
+  function handleLogout() {
+    auth.logout();
+    navigate("/auth", { replace: true });
+  }
+
   const [isHidden, setIsHidden] = useState(true);
-  const [isActive, setIsActive] = useState(true);
 
   function toggleNav() {
     setIsHidden((prevState) => !prevState);
   }
-
-  function toggleActive() {}
 
   const navStyle = {
     transform: isHidden ? "translateX(100%)" : "translateX(0%)",
@@ -26,16 +33,34 @@ export default function Navbar() {
       <h1>DFS Hive</h1>
       <nav className="active">
         <ul className="nav-list">
-          <li>Bankroll Manager</li>
-          <li>Articles</li>
-          <li>Brandon's Plays</li>
+          <NavLink to="/brm-tracker">
+            <li className="link">Bankroll Manager</li>
+          </NavLink>
+          <NavLink to="/articles">
+            <li className="link">Articles</li>
+          </NavLink>
+          <NavLink to="/brandons-plays">
+            <li className="link">Brandon's Plays</li>
+          </NavLink>
+          <NavLink to="/login">
+            <li className="link">Login</li>
+          </NavLink>
         </ul>
       </nav>
       <nav className="inactive" style={navStyle}>
         <ul className="nav-list">
-          <li>Bankroll Manager</li>
-          <li>Articles</li>
-          <li>Brandon's Plays</li>
+          <NavLink to="/brm-tracker">
+            <li className="link">Bankroll Manager</li>
+          </NavLink>
+          <NavLink to="/articles">
+            <li className="link">Articles</li>
+          </NavLink>
+          <NavLink to="/brandons-plays">
+            <li className="link">Brandon's Plays</li>
+          </NavLink>
+          <NavLink to="/login">
+            <li className="link">Login</li>
+          </NavLink>
         </ul>
       </nav>
       <button
