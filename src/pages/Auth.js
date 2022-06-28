@@ -1,16 +1,16 @@
 import React, { useState, useContext } from "react";
-import Input from "../util/Input";
-import Button from "../shared/Button";
+import Input from "../FormElements/Input";
+import Button from "../FormElements/Button";
 import { useForm } from "../util/form-hook";
-import ErrorModal from "../shared/ErrorModal";
-import LoadingSpinner from "../shared/LoadingSpinner";
+import ErrorModal from "../UIElements/ErrorModal";
+import LoadingSpinner from "../UIElements/LoadingSpinner";
 import { useHttpClient } from "../util/http-hook";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../util/validator";
-import Card from "../shared/Card";
+import Card from "../UIElements/Card";
 import { AuthContext } from "../util/auth-context";
 
 import "./Auth.css";

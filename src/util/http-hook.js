@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +33,7 @@ export const useHttpClient = () => {
       } catch (err) {
         setError(err.message);
         throw err;
+        setIsLoading(false);
       }
     },
     []

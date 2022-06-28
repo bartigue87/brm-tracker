@@ -1,15 +1,14 @@
 .button {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid hsl(10, 79%, 65%);
+  border-radius: 4px;
+  background: hsl(10, 79%, 65%);
+  color: white;
   cursor: pointer;
-  background-color: #5d6e77;
-  box-shadow: var(--box-shadow);
-  color: #fff;
-  border: 0;
-  display: block;
-  font-size: 1rem;
-  margin: 10px 0 30px;
-  padding: 10px;
-  width: 100%;
-  border-radius: 20px;
+  margin-right: 1rem;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .button:focus {
@@ -18,9 +17,8 @@
 
 .button:hover,
 .button:active {
-  background: #fcb43a;
+  background: hsl(10, 79%, 40%);
   border-color: hsl(10, 79%, 65%);
-  color: black;
 }
 
 .button--inverse {
