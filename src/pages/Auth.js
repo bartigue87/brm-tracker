@@ -46,7 +46,7 @@ export default function Auth() {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:3000/api/users/login",
+          "http://localhost:5002/api/users/login",
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -65,9 +65,8 @@ export default function Auth() {
         formData.append("email", formState.inputs.email.value);
         formData.append("name", formState.inputs.name.value);
         formData.append("password", formState.inputs.password.value);
-        formData.append("image", formState.inputs.image.value);
         const responseData = await sendRequest(
-          "http://localhost:3000/api/users/signup",
+          "http://localhost:5002/api/users/signup",
           "POST",
           formData
         );
@@ -80,7 +79,7 @@ export default function Auth() {
   function switchModeHandler() {
     if (!isLoginMode) {
       setFormData(
-        { ...formState.inputs, name: undefined, image: undefined },
+        { ...formState.inputs, name: undefined },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
     } else {
@@ -88,10 +87,6 @@ export default function Auth() {
         {
           ...formState.inputs,
           name: {
-            value: "",
-            isValid: false,
-          },
-          image: {
             value: "",
             isValid: false,
           },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./NewTrackerPage.css";
@@ -10,6 +10,10 @@ import { useForm } from "../shared/form-hook";
 
 export default function NewTrackerPage() {
   let navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [formState, inputHandler] = useForm(
     {
