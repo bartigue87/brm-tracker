@@ -102,6 +102,20 @@ input[type="number"] {
   border-radius: 20px;
 }
 
+.logged-out-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  top: 150px;
+  width: 300px;
+  padding: 20px 40px;
+  margin: 0 auto;
+  background: #fcb43a;
+  color: black;
+  border-radius: 20px;
+}
+
 .button:focus,
 .delete-btn:focus {
   outline: 0;

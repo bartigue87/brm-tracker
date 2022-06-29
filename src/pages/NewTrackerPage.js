@@ -7,6 +7,7 @@ import Input from "../FormElements/Input";
 import { VALIDATOR_REQUIRE } from "../util/validator";
 import Button from "../FormElements/Button";
 import { useForm } from "../shared/form-hook";
+import { useHttpClient } from "../util/http-hook";
 
 export default function NewTrackerPage() {
   let navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function NewTrackerPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(
     {
@@ -25,11 +27,11 @@ export default function NewTrackerPage() {
         value: "",
         isValid: false,
       },
-      withdrawal: {
+      withdrawals: {
         value: "",
         isValid: false,
       },
-      balance: {
+      currentBalance: {
         value: "",
         isValid: false,
       },
@@ -43,6 +45,16 @@ export default function NewTrackerPage() {
 
   function submitHandler(event) {
     event.preventDefault();
+    sendRequest(
+      "http://localhost:5002/api/trackers",
+      "POST",
+      JSON.stringify({
+        title: formState.inputs.title.value,
+        deposit: formState.inputs.deposit.value,
+        withdrawals: formState.inputs.withdrawals.value,
+        currentBalance: formState.inputs.currentBalance.value,
+      })
+    );
   }
 
   return (

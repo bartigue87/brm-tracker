@@ -10,7 +10,7 @@ export default function Navbar() {
 
   function handleLogout() {
     auth.logout();
-    navigate("/auth", { replace: true });
+    navigate("/login", { replace: true });
   }
 
   const [isHidden, setIsHidden] = useState(true);
@@ -43,7 +43,13 @@ export default function Navbar() {
             <li className="link">Brandon's Plays</li>
           </NavLink>
           <NavLink to="/login">
-            <li className="link">Login</li>
+            {auth.isLoggedIn ? (
+              <li className="link" onClick={handleLogout}>
+                Logout
+              </li>
+            ) : (
+              <li className="link">Login</li>
+            )}
           </NavLink>
         </ul>
       </nav>
@@ -58,8 +64,15 @@ export default function Navbar() {
           <NavLink to="/brandons-plays">
             <li className="link">Brandon's Plays</li>
           </NavLink>
+
           <NavLink to="/login">
-            <li className="link">Login</li>
+            {auth.isLoggedIn ? (
+              <li className="link" onClick={handleLogout}>
+                Logout
+              </li>
+            ) : (
+              <li className="link">Login</li>
+            )}
           </NavLink>
         </ul>
       </nav>

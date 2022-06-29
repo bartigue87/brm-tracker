@@ -56,21 +56,28 @@ export default function Auth() {
             "Content-Type": "application/json",
           }
         );
-        navigate("/", { replace: true });
         auth.login(responseData.user.id);
+        navigate("/brm-tracker", { replace: true });
       } catch (err) {}
     } else {
       try {
-        const formData = new FormData();
-        formData.append("email", formState.inputs.email.value);
-        formData.append("name", formState.inputs.name.value);
-        formData.append("password", formState.inputs.password.value);
+        // const formData = new FormData();
+        // formData.append("name", formState.inputs.name.value);
+        // formData.append("email", formState.inputs.email.value);
+        // formData.append("password", formState.inputs.password.value);
         const responseData = await sendRequest(
           "http://localhost:5002/api/users/signup",
           "POST",
-          formData
+          JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          {
+            "Content-Type": "application/json",
+          }
         );
-        navigate("/", { replace: true });
+        navigate("/brm-tracker", { replace: true });
         auth.login(responseData.user.id);
       } catch (err) {}
     }
