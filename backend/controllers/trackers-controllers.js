@@ -59,8 +59,10 @@ const createTracker = async (req, res, next) => {
     throw new HttpError("Invalid inputs passed, please check your data");
   }
 
-  const { title, deposit, withdrawals, net, currentBalance, creator } =
-    req.body;
+  const { title, deposit, withdrawals, currentBalance, creator } = req.body;
+
+  let net = Number(currentBalance) - Number(deposit) + Number(withdrawals);
+
   const createdTracker = new Tracker({
     title,
     deposit,

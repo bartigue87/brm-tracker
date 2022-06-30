@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import trashIcon from "../images/trash-svgrepo-com.svg";
 import editIcon from "../images/edit-svgrepo-com.svg";
+import "./TrackerItem.css"
 
 export default function Tracker(props) {
   const [formData, setFormData] = useState({
@@ -132,28 +133,28 @@ export default function Tracker(props) {
 
         <h1 className="site">{props.title}</h1>
         <h3>Current Balance</h3>
-        <h1 className="balance">{totals.currentBalance}</h1>
+        <h1 className="balance">{props.currentBalance}</h1>
 
         <div className="inc-exp-container">
           <div>
             <h5>Deposits</h5>
-            <p className="money minus">{totals.deposit}</p>
+            <p className="money minus">{props.deposit}</p>
           </div>
           <div>
             <h5>Withdrawals</h5>
-            <p className="money plus">{totals.withdrawals}</p>
+            <p className="money plus">{props.withdrawals}</p>
           </div>
           <div>
             <h5>Net</h5>
             <p className="money" style={netColor}>
-              {totals.net}
+              {props.net}
             </p>
           </div>
         </div>
 
         <h3>History</h3>
         <ul id="list" className="list">
-          {history}
+          {props.history}
         </ul>
 
         <h3>Add transaction</h3>

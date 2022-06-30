@@ -1,6 +1,7 @@
 import React from "react";
 import email from "../images/email.png";
 import twitter from "../images/twitter-icons-png-2.png";
+import "./Footer.css";
 
 export default function Footer() {
   return (

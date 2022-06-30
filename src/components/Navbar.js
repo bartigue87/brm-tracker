@@ -3,6 +3,7 @@ import hamburgerIcon from "../images/icon-hamburger.svg";
 import closeIcon from "../images/icon-close.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../util/auth-context";
+import "./Navbar.css"
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
@@ -33,7 +34,7 @@ export default function Navbar() {
       <h1>DFS Hive</h1>
       <nav className="active">
         <ul className="nav-list">
-          <NavLink to="/brm-tracker">
+          <NavLink to={`/${auth.userId}/brm-tracker`}>
             <li className="link">Bankroll Manager</li>
           </NavLink>
           <NavLink to="/articles">
@@ -55,7 +56,7 @@ export default function Navbar() {
       </nav>
       <nav className="inactive" style={navStyle}>
         <ul className="nav-list">
-          <NavLink to="/brm-tracker">
+          <NavLink to={`/${auth.userId}/brm-tracker`}>
             <li className="link">Bankroll Manager</li>
           </NavLink>
           <NavLink to="/articles">

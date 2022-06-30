@@ -1,4 +1,5 @@
 import React from "react";
+import "./AddTracker.css";
 
 export default function AddTracker(props) {
   return (

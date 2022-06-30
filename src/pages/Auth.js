@@ -39,6 +39,8 @@ export default function Auth() {
     false
   );
 
+  console.log(formState.isValid);
+
   async function authSubmitHandler(event) {
     event.preventDefault();
 
@@ -57,7 +59,7 @@ export default function Auth() {
           }
         );
         auth.login(responseData.user.id);
-        navigate("/brm-tracker", { replace: true });
+        navigate(`/articles`, { replace: true });
       } catch (err) {}
     } else {
       try {
@@ -77,7 +79,7 @@ export default function Auth() {
             "Content-Type": "application/json",
           }
         );
-        navigate("/brm-tracker", { replace: true });
+        navigate(`/articles`, { replace: true });
         auth.login(responseData.user.id);
       } catch (err) {}
     }

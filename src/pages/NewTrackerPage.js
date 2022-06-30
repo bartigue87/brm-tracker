@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./NewTrackerPage.css";
@@ -8,8 +8,12 @@ import { VALIDATOR_REQUIRE } from "../util/validator";
 import Button from "../FormElements/Button";
 import { useForm } from "../shared/form-hook";
 import { useHttpClient } from "../util/http-hook";
+import { AuthContext } from "../util/auth-context";
+import ErrorModal from "../UIElements/ErrorModal";
+import LoadingSpinner from "../UIElements/LoadingSpinner";
 
 export default function NewTrackerPage() {
+  const auth = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -39,22 +43,27 @@ export default function NewTrackerPage() {
     false
   );
 
-  function handleCloseBtn() {
-    navigate("/brm-tracker", { replace: true });
+  function handleRedirect() {
+    navigate(`/${auth.userId}/brm-tracker`, { replace: true });
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
-    sendRequest(
-      "http://localhost:5002/api/trackers",
-      "POST",
-      JSON.stringify({
-        title: formState.inputs.title.value,
-        deposit: formState.inputs.deposit.value,
-        withdrawals: formState.inputs.withdrawals.value,
-        currentBalance: formState.inputs.currentBalance.value,
-      })
-    );
+    try {
+      await sendRequest(
+        "http://localhost:5002/api/trackers",
+        "POST",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          deposit: formState.inputs.deposit.value,
+          withdrawals: formState.inputs.withdrawals.value,
+          currentBalance: formState.inputs.currentBalance.value,
+          creator: auth.userId,
+        }),
+        { "Content-Type": "application/json" }
+      );
+      handleRedirect();
+    } catch (err) {}
   }
 
   return (
@@ -62,7 +71,9 @@ export default function NewTrackerPage() {
       <Navbar />
       <section className="new-tracker-container">
         <h1 className="page-header">Create a new Tracker</h1>
+        <ErrorModal error={error} onClear={clearError} />
         <form className="form" onSubmit={submitHandler}>
+          {isLoading && <LoadingSpinner asOverlay />}
           <div className="form-controller">
             <Input
               id="title"
@@ -89,7 +100,7 @@ export default function NewTrackerPage() {
           </div>
           <div className="form-controller">
             <Input
-              id="withdrawal"
+              id="withdrawals"
               element="input"
               type="number"
               label="Withdrawal"
@@ -101,7 +112,7 @@ export default function NewTrackerPage() {
           </div>
           <div className="form-controller">
             <Input
-              id="balance"
+              id="currentBalance"
               element="input"
               type="number"
               label="Current Balance"
@@ -115,7 +126,7 @@ export default function NewTrackerPage() {
             <Button type="submit" disabled={!formState.isValid}>
               Submit
             </Button>
-            <button onClick={handleCloseBtn} className="button">
+            <button onClick={handleRedirect} className="button">
               Cancel
             </button>
           </div>

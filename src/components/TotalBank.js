@@ -1,35 +1,50 @@
-import React, { useState, useContext } from "react";
-import { useTotal } from "./TotalContext";
+import React, { useState, useEffect } from "react";
+import "./TotalBank.css";
 
-export default function TotalBank() {
-  const [grandTotal, setGrandTotal] = useState({
-    totalDeposit: 0,
-    totalWithrawal: 0,
-    totalNet: 0,
-    todayNet: 0,
-  });
+export default function TotalBank(props) {
+  const [deposit, setDeposit] = useState(0);
+  const [withdrawal, setWithdrawal] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+  const [net, setNet] = useState(0);
 
-  const total = useTotal();
-
-  console.log(total);
+  console.log(props.items);
+  useEffect(() => {
+    function setTotals() {
+      try {
+        for (let i = 0; i < props.items.length; i++) {
+          setDeposit(
+            (prevState) => (prevState += Number(props.items[i].deposit))
+          );
+          setWithdrawal(
+            (prevState) => (prevState += Number(props.items[i].withdrawals))
+          );
+          setTotalBalance(
+            (prevState) => (prevState += Number(props.items[i].currentBalance))
+          );
+          setNet((prevState) => (prevState += Number(props.items[i].net)));
+        }
+      } catch (err) {}
+    }
+    setTotals();
+  }, [props.items]);
 
   return (
     <div className="inc-exp-container total-bank">
       <div>
         <h5>Deposits</h5>
-        <p className="money minus">{grandTotal.totalDeposit}</p>
+        <p className="money minus">{deposit}</p>
       </div>
       <div>
         <h5>Withdrawals</h5>
-        <p className="money plus">{grandTotal.totalWithrawal}</p>
+        <p className="money plus">{withdrawal}</p>
       </div>
       <div>
         <h5>Net</h5>
-        <p className="money">{grandTotal.totalNet}</p>
+        <p className="money">{net}</p>
       </div>
       <div>
-        <h5>Today's (+/-)</h5>
-        <p className="money">{grandTotal.todayNet}</p>
+        <h5>Total Balance</h5>
+        <p className="money">{totalBalance}</p>
       </div>
     </div>
   );
