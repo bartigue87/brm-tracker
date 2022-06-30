@@ -28,6 +28,10 @@ export default function TotalBank(props) {
     setTotals();
   }, [props.items]);
 
+  const netColor = {
+    color: net > 0 ? "#2ecc71" : "#c0392b",
+  };
+
   return (
     <div className="inc-exp-container total-bank">
       <div>
@@ -40,7 +44,9 @@ export default function TotalBank(props) {
       </div>
       <div>
         <h5>Net</h5>
-        <p className="money">{net}</p>
+        <p className="money" style={netColor}>
+          {net}
+        </p>
       </div>
       <div>
         <h5>Total Balance</h5>

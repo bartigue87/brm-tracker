@@ -1,124 +1,155 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import trashIcon from "../images/trash-svgrepo-com.svg";
 import editIcon from "../images/edit-svgrepo-com.svg";
-import "./TrackerItem.css"
+import "./TrackerItem.css";
+import { useHttpClient } from "../util/http-hook";
+import Input from "../FormElements/Input";
+import { VALIDATOR_REQUIRE } from "../util/validator";
+import { useForm } from "../shared/form-hook";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../util/auth-context";
 
 export default function Tracker(props) {
-  const [formData, setFormData] = useState({
-    deposit: "",
-    withdrawals: "",
-    endOfDayBalance: "",
-  });
+  const trackerId = props.id;
+  const { sendRequest } = useHttpClient();
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: "",
+        isValid: false,
+      },
+      deposit: {
+        value: "",
+        isValid: false,
+      },
+      withdrawals: {
+        value: "",
+        isValid: false,
+      },
+      currentBalance: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  // const [formData, setFormData] = useState({
+  //   deposit: "",
+  //   withdrawals: "",
+  //   endOfDayBalance: "",
+  // });
+
   const [totals, setTotals] = useState({
     currentBalance: props.currentBalance,
     deposit: props.deposit,
     withdrawals: props.withdrawals,
     net: props.net,
   });
-  const [historyTotal, setHistoryTotal] = useState(props.history);
 
-  const currentYear = new Date().getFullYear();
+  // const [historyTotal, setHistoryTotal] = useState(props.history);
 
-  const currentMonth = new Date().getMonth() + 1;
+  // const currentYear = new Date().getFullYear();
 
-  const currentDay = new Date().getDate();
+  // const currentMonth = new Date().getMonth() + 1;
 
-  const together = [currentMonth, currentDay, currentYear].join("/");
+  // const currentDay = new Date().getDate();
 
-  function handleChange(event) {
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [event.target.name]: Number(event.target.value),
-      };
-    });
-  }
+  // const together = [currentMonth, currentDay, currentYear].join("/");
 
-  function updateBalance(event) {
+  // function handleChange(event) {
+  //   setFormData((prevFormData) => {
+  //     return {
+  //       ...prevFormData,
+  //       [event.target.name]: Number(event.target.value),
+  //     };
+  //   });
+  // }
+
+  console.log(
+    "props.withdrawals + Number(formState.inputs.withdrawals.value)",
+    props.withdrawals + Number(formState.inputs.withdrawals.value)
+  );
+
+  //TODO: Currently works but doesn't refresh. Remove prevent default once you learn how to stay logged in upon refresh
+  const updateBalance = async (event) => {
     event.preventDefault();
-    if (
-      formData.endOfDayBalance !== "" &&
-      formData.withdrawals !== "" &&
-      formData.deposit !== ""
-    ) {
-      setTotals((prevTotals) => {
-        return {
-          currentBalance: formData.endOfDayBalance,
-          deposit: prevTotals.deposit + formData.deposit,
-          withdrawals: prevTotals.withdrawals + formData.withdrawals,
-          net:
-            formData.endOfDayBalance -
-            (prevTotals.deposit + formData.deposit) +
-            (prevTotals.withdrawals + formData.withdrawals),
-        };
-      });
-      updateHistory();
-    } else {
-      alert(`Please enter a value for each field in ${props.title}.`);
-    }
-    setFormData({
-      deposit: "",
-      withdrawals: "",
-      endOfDayBalance: "",
-    });
-  }
+    try {
+      await sendRequest(
+        `http://localhost:5002/api/trackers/${trackerId}`,
+        "PATCH",
+        JSON.stringify({
+          title: props.title,
+          deposit: props.deposit + Number(formState.inputs.deposit.value),
+          withdrawals:
+            props.withdrawals + Number(formState.inputs.withdrawals.value),
+          currentBalance: Number(formState.inputs.currentBalance.value),
+        }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+  };
 
-  function updateHistory() {
-    if (formData.withdrawals !== 0 && formData.deposit !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Withdrawal",
-            amount: formData.withdrawals,
-            date: together,
-          },
-          {
-            key: prevHistory.length,
-            title: "Deposit",
-            amount: formData.deposit,
-            date: together,
-          },
-        ];
-      });
-    } else if (formData.withdrawals !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Withdrawal",
-            amount: formData.withdrawals,
-            date: together,
-          },
-        ];
-      });
-    } else if (formData.deposit !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Deposit",
-            amount: formData.deposit,
-            date: together,
-          },
-        ];
-      });
-    }
-  }
-  const history = historyTotal.map((ticket) => {
-    return (
-      <li key={ticket.id}>
-        <p>{ticket.title}:</p>
-        <p>${ticket.amount}</p>
-        <p>{ticket.date}</p>
-        <button className="delete-btn">X</button>
-      </li>
-    );
-  });
-  console.log(totals.net);
+  // function updateHistory() {
+  //   if (formData.withdrawals !== 0 && formData.deposit !== 0) {
+  //     setHistoryTotal((prevHistory) => {
+  //       return [
+  //         ...prevHistory,
+  //         {
+  //           key: prevHistory.length - 1,
+  //           title: "Withdrawal",
+  //           amount: formData.withdrawals,
+  //           date: together,
+  //         },
+  //         {
+  //           key: prevHistory.length,
+  //           title: "Deposit",
+  //           amount: formData.deposit,
+  //           date: together,
+  //         },
+  //       ];
+  //     });
+  //   } else if (formData.withdrawals !== 0) {
+  //     setHistoryTotal((prevHistory) => {
+  //       return [
+  //         ...prevHistory,
+  //         {
+  //           key: prevHistory.length - 1,
+  //           title: "Withdrawal",
+  //           amount: formData.withdrawals,
+  //           date: together,
+  //         },
+  //       ];
+  //     });
+  //   } else if (formData.deposit !== 0) {
+  //     setHistoryTotal((prevHistory) => {
+  //       return [
+  //         ...prevHistory,
+  //         {
+  //           key: prevHistory.length - 1,
+  //           title: "Deposit",
+  //           amount: formData.deposit,
+  //           date: together,
+  //         },
+  //       ];
+  //     });
+  //   }
+  // }
+  // const history = historyTotal.map((ticket) => {
+  //   return (
+  //     <li key={ticket.id}>
+  //       <p>{ticket.title}:</p>
+  //       <p>${ticket.amount}</p>
+  //       <p>{ticket.date}</p>
+  //       <button className="delete-btn">X</button>
+  //     </li>
+  //   );
+  // });
+  // console.log(totals.net);
+
   const netColor = {
     color: totals.net > 0 ? "#2ecc71" : "#c0392b",
   };
@@ -166,32 +197,41 @@ export default function Tracker(props) {
         >
           <div className="form-control">
             <label htmlFor="deposit">Deposit</label>
-            <input
+            <Input
+              id="deposit"
+              element="input"
               type="number"
-              onChange={handleChange}
+              label="Deposit"
               placeholder="Enter amount... enter 0 if you didn't deposit"
-              name="deposit"
-              value={formData.deposit}
+              errorText="Please enter a valid number"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
             />
           </div>
           <div className="form-control">
             <label htmlFor="withdrawals">Withdrawal</label>
-            <input
-              name="withdrawals"
+            <Input
+              id="withdrawals"
+              element="input"
               type="number"
-              onChange={handleChange}
+              label="Withdrawal"
               placeholder="Enter amount... enter 0 if you didn't withdraw"
-              value={formData.withdrawals}
+              errorText="Please enter a valid number"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
             />
           </div>
           <div className="form-control">
             <label htmlFor="endOfDayBalance">Current Balance</label>
-            <input
-              name="endOfDayBalance"
+            <Input
+              id="currentBalance"
+              element="input"
               type="number"
-              onChange={handleChange}
+              label="Current Balance"
               placeholder="Enter the amount of money in your account"
-              value={formData.endOfDayBalance}
+              errorText="Please enter a valid number"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
             />
           </div>
           <button type="submit" className="button">
