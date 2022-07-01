@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const usersRoutes = require("./backend/routes/users-routes");
 const trackerRoutes = require("./backend/routes/tracker-routes");
+const historyRoutes = require("./backend/routes/history-routes")
 const HttpError = require("./backend/models/http-error");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 app.use("/api/trackers", trackerRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/history", historyRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import trashIcon from "../images/trash-svgrepo-com.svg";
 import editIcon from "../images/edit-svgrepo-com.svg";
 import "./TrackerItem.css";
 import { useHttpClient } from "../util/http-hook";
 import Input from "../FormElements/Input";
 import { VALIDATOR_REQUIRE } from "../util/validator";
-import { useForm } from "../shared/form-hook";
+import { useForm } from "../util/form-hook";
 import { useNavigate } from "react-router";
-import { AuthContext } from "../util/auth-context";
+import TrackerHistory from "./TrackerHistory";
 
 export default function Tracker(props) {
   const trackerId = props.id;
   const { sendRequest } = useHttpClient();
-  const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formState, inputHandler] = useForm(
@@ -37,20 +36,58 @@ export default function Tracker(props) {
     false
   );
 
-  const [historyTotal, setHistoryTotal] = useState(props.history);
-
-  const currentYear = new Date().getFullYear();
-
-  const currentMonth = new Date().getMonth() + 1;
-
-  const currentDay = new Date().getDate();
-
-  const together = [currentMonth, currentDay, currentYear].join("/");
-
   console.log(
     "props.withdrawals + Number(formState.inputs.withdrawals.value)",
     props.withdrawals + Number(formState.inputs.withdrawals.value)
   );
+
+  async function addWithdrawalToHistory() {
+    try {
+      await sendRequest(
+        "http://localhost:5002/api/history",
+        "POST",
+        JSON.stringify({
+          title: "Withdrawal",
+          amount: formState.inputs.withdrawals.value,
+          trackerLink: trackerId,
+        }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+  }
+
+  async function addDepositToHistory() {
+    try {
+      await sendRequest(
+        "http://localhost:5002/api/history",
+        "POST",
+        JSON.stringify({
+          title: "Deposit",
+          amount: formState.inputs.deposit.value,
+          trackerLink: trackerId,
+        }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (err) {}
+  }
+
+  async function updateHistory() {
+    if (
+      formState.inputs.withdrawals.value > 0 &&
+      formState.inputs.deposit.value > 0
+    ) {
+      try {
+        await addWithdrawalToHistory();
+      } catch (err) {}
+      try {
+        await addDepositToHistory();
+      } catch (err) {}
+    } else if (formState.inputs.withdrawals.value > 0) {
+      addWithdrawalToHistory();
+    } else if (formState.inputs.deposit.value > 0) {
+      addDepositToHistory();
+    }
+  }
 
   //TODO: Currently works but doesn't refresh. Remove prevent default once you learn how to stay logged in upon refresh
   const updateBalance = async (event) => {
@@ -71,62 +108,6 @@ export default function Tracker(props) {
       updateHistory();
     } catch (err) {}
   };
-
-  function updateHistory() {
-    if (formState.withdrawals !== 0 && formState.deposit !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Withdrawal",
-            amount: formState.withdrawals,
-            date: together,
-          },
-          {
-            key: prevHistory.length,
-            title: "Deposit",
-            amount: formState.deposit,
-            date: together,
-          },
-        ];
-      });
-    } else if (formState.withdrawals !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Withdrawal",
-            amount: formState.withdrawals,
-            date: together,
-          },
-        ];
-      });
-    } else if (formState.deposit !== 0) {
-      setHistoryTotal((prevHistory) => {
-        return [
-          ...prevHistory,
-          {
-            key: prevHistory.length - 1,
-            title: "Deposit",
-            amount: formState.deposit,
-            date: together,
-          },
-        ];
-      });
-    }
-  }
-  const history = historyTotal.map((ticket) => {
-    return (
-      <li key={ticket.id}>
-        <p>{ticket.title}:</p>
-        <p>${ticket.amount}</p>
-        <p>{ticket.date}</p>
-        <button className="delete-btn">X</button>
-      </li>
-    );
-  });
 
   const netColor = {
     color: props.net > 0 ? "#2ecc71" : "#c0392b",
@@ -156,23 +137,23 @@ export default function Tracker(props) {
         <div className="inc-exp-container">
           <div>
             <h5>Deposits</h5>
-            <p className="money minus">{props.deposit}</p>
+            <p className="money minus">{props.deposit.toFixed(2)}</p>
           </div>
           <div>
             <h5>Withdrawals</h5>
-            <p className="money plus">{props.withdrawals}</p>
+            <p className="money plus">{props.withdrawals.toFixed(2)}</p>
           </div>
           <div>
             <h5>Net</h5>
             <p className="money" style={netColor}>
-              {props.net}
+              {props.net.toFixed(2)}
             </p>
           </div>
         </div>
 
         <h3>History</h3>
         <ul id="list" className="list">
-          {history}
+          <TrackerHistory trackerId={trackerId} />
         </ul>
 
         <h3>Add transaction</h3>

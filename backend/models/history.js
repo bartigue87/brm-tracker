@@ -15,7 +15,7 @@ const historySchema = new Schema({
     type: String,
     required: true,
   },
-  tracker: {
+  trackerLink: {
     type: mongoose.Types.ObjectId,
     required: true,
     ref: "Tracker",

@@ -11,23 +11,20 @@ router.get("/tracker/:tid", historyControllers.getHistoryByTrackerId);
 
 router.post(
   "/",
-  [
-    check("title").not().isEmpty(),
-    check("amount").not().isEmpty(),
-    check("date").not().isEmpty(),
-  ],
+  [check("title").not().isEmpty(), check("amount").not().isEmpty()],
   historyControllers.createHistory
 );
 
-router.patch(
-  "/:hid",
-  [
-    check("title").not().isEmpty(),
-    check("amount").not().isEmpty(),
-    check("date").not().isEmpty(),
-  ],
-  historyControllers.updateHistory
-);
+//Probably dont need
+// router.patch(
+//   "/:hid",
+//   [
+//     check("title").not().isEmpty(),
+//     check("amount").not().isEmpty(),
+//     check("date").not().isEmpty(),
+//   ],
+//   historyControllers.updateHistory
+// );
 
 router.delete("/:hid", historyControllers.deleteHistory);
 

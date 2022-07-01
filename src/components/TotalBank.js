@@ -36,20 +36,20 @@ export default function TotalBank(props) {
     <div className="inc-exp-container total-bank">
       <div>
         <h5>Deposits</h5>
-        <p className="money minus">{deposit}</p>
+        <p className="money minus">{deposit.toFixed(2)}</p>
       </div>
       <div>
         <h5>Withdrawals</h5>
-        <p className="money plus">{withdrawal}</p>
+        <p className="money plus">{withdrawal.toFixed(2)}</p>
       </div>
       <div>
         <h5>Net</h5>
         <p className="money" style={netColor}>
-          {net}
+          {net.toFixed(2)}
         </p>
       </div>
       <div>
-        <h5>Total Balance</h5>
+        <h5>Balance</h5>
         <p className="money">{totalBalance}</p>
       </div>
     </div>
