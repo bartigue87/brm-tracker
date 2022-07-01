@@ -63,10 +63,6 @@ export default function Auth() {
       } catch (err) {}
     } else {
       try {
-        // const formData = new FormData();
-        // formData.append("name", formState.inputs.name.value);
-        // formData.append("email", formState.inputs.email.value);
-        // formData.append("password", formState.inputs.password.value);
         const responseData = await sendRequest(
           "http://localhost:5002/api/users/signup",
           "POST",

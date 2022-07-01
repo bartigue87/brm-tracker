@@ -6,6 +6,7 @@ import Auth from "./pages/Auth";
 import ArticlesPage from "./pages/ArticlesPage";
 import MyPlays from "./pages/MyPlays";
 import { AuthContext } from "../src/util/auth-context";
+import UpdateTrackerPage from "./pages/UpdateTrackerPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Auth />} />
         <Route path="/:userId/brm-tracker" element={<UserTrackers />} />
         <Route path="/new-tracker" element={<NewTrackerPage />} />
+        <Route path="/update-tracker/:tid" element={<UpdateTrackerPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/brandons-plays" element={<MyPlays />} />
       </Routes>
@@ -40,6 +42,7 @@ function App() {
         <Route path="/login" exact element={<Auth />} />
         <Route path="/:userId/brm-tracker" element={<UserTrackers />} />
         <Route path="/new-tracker" element={<NewTrackerPage />} />
+        <Route path="/update-tracker/:tid" element={<UpdateTrackerPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/brandons-plays" element={<MyPlays />} />
       </Routes>

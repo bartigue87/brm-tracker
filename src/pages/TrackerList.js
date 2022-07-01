@@ -3,7 +3,7 @@ import React from "react";
 import Card from "../UIElements/Card";
 import TrackerItem from "../components/TrackerItem";
 
-const PlaceList = (props) => {
+const TrackerList = (props) => {
   if (props.items.length === 0) {
     return (
       <div className="place-list center">
@@ -34,4 +34,4 @@ const PlaceList = (props) => {
   );
 };
 
-export default PlaceList;
+export default TrackerList;

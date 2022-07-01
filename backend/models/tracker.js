@@ -23,7 +23,6 @@ const trackerSchema = new Schema({
     type: Number,
     required: true,
   },
-
   history: [
     {
       type: mongoose.Types.ObjectId,

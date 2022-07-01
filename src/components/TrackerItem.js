@@ -37,37 +37,15 @@ export default function Tracker(props) {
     false
   );
 
-  // const [formData, setFormData] = useState({
-  //   deposit: "",
-  //   withdrawals: "",
-  //   endOfDayBalance: "",
-  // });
+  const [historyTotal, setHistoryTotal] = useState(props.history);
 
-  const [totals, setTotals] = useState({
-    currentBalance: props.currentBalance,
-    deposit: props.deposit,
-    withdrawals: props.withdrawals,
-    net: props.net,
-  });
+  const currentYear = new Date().getFullYear();
 
-  // const [historyTotal, setHistoryTotal] = useState(props.history);
+  const currentMonth = new Date().getMonth() + 1;
 
-  // const currentYear = new Date().getFullYear();
+  const currentDay = new Date().getDate();
 
-  // const currentMonth = new Date().getMonth() + 1;
-
-  // const currentDay = new Date().getDate();
-
-  // const together = [currentMonth, currentDay, currentYear].join("/");
-
-  // function handleChange(event) {
-  //   setFormData((prevFormData) => {
-  //     return {
-  //       ...prevFormData,
-  //       [event.target.name]: Number(event.target.value),
-  //     };
-  //   });
-  // }
+  const together = [currentMonth, currentDay, currentYear].join("/");
 
   console.log(
     "props.withdrawals + Number(formState.inputs.withdrawals.value)",
@@ -90,76 +68,85 @@ export default function Tracker(props) {
         }),
         { "Content-Type": "application/json" }
       );
+      updateHistory();
     } catch (err) {}
   };
 
-  // function updateHistory() {
-  //   if (formData.withdrawals !== 0 && formData.deposit !== 0) {
-  //     setHistoryTotal((prevHistory) => {
-  //       return [
-  //         ...prevHistory,
-  //         {
-  //           key: prevHistory.length - 1,
-  //           title: "Withdrawal",
-  //           amount: formData.withdrawals,
-  //           date: together,
-  //         },
-  //         {
-  //           key: prevHistory.length,
-  //           title: "Deposit",
-  //           amount: formData.deposit,
-  //           date: together,
-  //         },
-  //       ];
-  //     });
-  //   } else if (formData.withdrawals !== 0) {
-  //     setHistoryTotal((prevHistory) => {
-  //       return [
-  //         ...prevHistory,
-  //         {
-  //           key: prevHistory.length - 1,
-  //           title: "Withdrawal",
-  //           amount: formData.withdrawals,
-  //           date: together,
-  //         },
-  //       ];
-  //     });
-  //   } else if (formData.deposit !== 0) {
-  //     setHistoryTotal((prevHistory) => {
-  //       return [
-  //         ...prevHistory,
-  //         {
-  //           key: prevHistory.length - 1,
-  //           title: "Deposit",
-  //           amount: formData.deposit,
-  //           date: together,
-  //         },
-  //       ];
-  //     });
-  //   }
-  // }
-  // const history = historyTotal.map((ticket) => {
-  //   return (
-  //     <li key={ticket.id}>
-  //       <p>{ticket.title}:</p>
-  //       <p>${ticket.amount}</p>
-  //       <p>{ticket.date}</p>
-  //       <button className="delete-btn">X</button>
-  //     </li>
-  //   );
-  // });
-  // console.log(totals.net);
+  function updateHistory() {
+    if (formState.withdrawals !== 0 && formState.deposit !== 0) {
+      setHistoryTotal((prevHistory) => {
+        return [
+          ...prevHistory,
+          {
+            key: prevHistory.length - 1,
+            title: "Withdrawal",
+            amount: formState.withdrawals,
+            date: together,
+          },
+          {
+            key: prevHistory.length,
+            title: "Deposit",
+            amount: formState.deposit,
+            date: together,
+          },
+        ];
+      });
+    } else if (formState.withdrawals !== 0) {
+      setHistoryTotal((prevHistory) => {
+        return [
+          ...prevHistory,
+          {
+            key: prevHistory.length - 1,
+            title: "Withdrawal",
+            amount: formState.withdrawals,
+            date: together,
+          },
+        ];
+      });
+    } else if (formState.deposit !== 0) {
+      setHistoryTotal((prevHistory) => {
+        return [
+          ...prevHistory,
+          {
+            key: prevHistory.length - 1,
+            title: "Deposit",
+            amount: formState.deposit,
+            date: together,
+          },
+        ];
+      });
+    }
+  }
+  const history = historyTotal.map((ticket) => {
+    return (
+      <li key={ticket.id}>
+        <p>{ticket.title}:</p>
+        <p>${ticket.amount}</p>
+        <p>{ticket.date}</p>
+        <button className="delete-btn">X</button>
+      </li>
+    );
+  });
 
   const netColor = {
-    color: totals.net > 0 ? "#2ecc71" : "#c0392b",
+    color: props.net > 0 ? "#2ecc71" : "#c0392b",
   };
+
+  function handleEditBtn() {
+    navigate(`/update-tracker/${trackerId}`, { replace: true });
+  }
 
   return (
     <>
       <div className="brm-container">
         <div className="top-right">
           <img className="del-btn" src={trashIcon} alt="trashcan" />
-          <img className="edit-btn" src={editIcon} alt="pencil" />
+          <img
+            className="edit-btn"
+            src={editIcon}
+            onClick={handleEditBtn}
+            alt="pencil"
+          />
         </div>
 
         <h1 className="site">{props.title}</h1>
@@ -185,7 +172,7 @@ export default function Tracker(props) {
 
         <h3>History</h3>
         <ul id="list" className="list">
-          {props.history}
+          {history}
         </ul>
 
         <h3>Add transaction</h3>
