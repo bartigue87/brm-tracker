@@ -112,7 +112,7 @@ const createHistory = async (req, res, next) => {
 //Don't think I need update History
 
 const deleteHistory = async (req, res, next) => {
-  const historyId = req.params().hid;
+  const historyId = req.params.hid;
 
   let history;
 

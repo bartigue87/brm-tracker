@@ -1,7 +1,10 @@
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const { createHistory } = require("./history-controllers");
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -40,10 +43,18 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError("Could not create user, please try again", 500);
+    return next(error);
+  }
+
   const newUser = new User({
     name,
     email,
-    password,
+    password: hashedPassword,
     trackers: [],
   });
 
@@ -54,7 +65,20 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: newUser.toObject({ getters: true }) });
+  let token;
+
+  try {
+    token = jwt.sign(
+      { userId: newUser.id, email: newUser.email },
+      "supersonic_acrobatic_rocket_powered_battle_cars",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Failed to signup", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ userId: newUser.id, email: newUser.email, token });
 };
 
 const login = async (req, res, next) => {
@@ -68,7 +92,24 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
+    const error = new HttpError("User does not exist", 401);
+    return next(error);
+  }
+
+  let isValidPassword = false;
+
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError(
+      "Invalid credentials, could not log you in",
+      500
+    );
+    return next(error);
+  }
+
+  if (!isValidPassword) {
     const error = new HttpError(
       "Invalid credentials, could not log you in",
       401
@@ -76,9 +117,23 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  let token;
+
+  try {
+    token = jwt.sign(
+      { userId: existingUser.id, email: existingUser.email },
+      "supersonic_acrobatic_rocket_powered_battle_cars",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Failed to login", 500);
+    return next(error);
+  }
+
   res.json({
-    message: "Logged in",
-    user: existingUser.toObject({ getters: true }),
+    userId: existingUser.id,
+    email: existingUser.email,
+    token,
   });
 };
 

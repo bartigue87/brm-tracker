@@ -19,8 +19,21 @@ const TrackerHistory = (props) => {
     fetchHistory();
   }, [sendRequest, trackerId]);
 
+  const historyDeleteHandler = (deletedHistoryId) => {
+    setLoadedHistory((prevTrackers) =>
+      prevTrackers.filter((history) => history.id !== deletedHistoryId)
+    );
+  };
+
   return (
-    <>{!isLoading && loadedHistory && <HistoryList items={loadedHistory} />}</>
+    <>
+      {!isLoading && loadedHistory && (
+        <HistoryList
+          items={loadedHistory}
+          onDeleteHistory={historyDeleteHandler}
+        />
+      )}
+    </>
   );
 };
 

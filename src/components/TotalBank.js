@@ -7,7 +7,6 @@ export default function TotalBank(props) {
   const [totalBalance, setTotalBalance] = useState(0);
   const [net, setNet] = useState(0);
 
-  console.log(props.items);
   useEffect(() => {
     function setTotals() {
       try {

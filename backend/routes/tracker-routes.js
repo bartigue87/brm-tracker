@@ -2,12 +2,15 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const trackersControllers = require("../controllers/trackers-controllers");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
 router.get("/:tid", trackersControllers.getTrackerById);
 
 router.get("/user/:uid", trackersControllers.getTrackersByUserId);
+
+router.use(checkAuth);
 
 router.post(
   "/",

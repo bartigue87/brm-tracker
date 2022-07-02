@@ -12,7 +12,7 @@ import { useHttpClient } from "../util/http-hook";
 import TrackerList from "./TrackerList";
 import "./UserTrackers.css";
 
-export default function Portfolio() {
+export default function UserTrackers() {
   let navigate = useNavigate();
   const auth = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttpClient();
@@ -56,6 +56,12 @@ export default function Portfolio() {
     navigate("/login", { replace: true });
   }
 
+  const trackerDeleteHandler = (deletedTrackerId) => {
+    setLoadedTrackers((prevTrackers) =>
+      prevTrackers.filter((tracker) => tracker.id !== deletedTrackerId)
+    );
+  };
+
   return (
     <>
       <Navbar />
@@ -68,7 +74,10 @@ export default function Portfolio() {
           <AddTracker handleClick={handleAddBtn} />
           <section className={gridClassName}>
             {!isLoading && loadedTrackers && (
-              <TrackerList items={loadedTrackers} />
+              <TrackerList
+                items={loadedTrackers}
+                onDeleteTracker={trackerDeleteHandler}
+              />
             )}
           </section>
           <Footer />

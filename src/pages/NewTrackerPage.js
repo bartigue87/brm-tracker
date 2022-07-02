@@ -60,7 +60,10 @@ export default function NewTrackerPage() {
           currentBalance: formState.inputs.currentBalance.value,
           creator: auth.userId,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        }
       );
       handleRedirect();
     } catch (err) {}

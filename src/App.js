@@ -7,30 +7,32 @@ import ArticlesPage from "./pages/ArticlesPage";
 import MyPlays from "./pages/MyPlays";
 import { AuthContext } from "../src/util/auth-context";
 import UpdateTrackerPage from "./pages/UpdateTrackerPage";
+import AddTransactionPage from "./pages/AddTransactionPage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Routes>
         <Route path="/login" element={<Auth />} />
         <Route path="/:userId/brm-tracker" element={<UserTrackers />} />
         <Route path="/new-tracker" element={<NewTrackerPage />} />
         <Route path="/update-tracker/:tid" element={<UpdateTrackerPage />} />
+        <Route path="/add-transaction/:tid" element={<AddTransactionPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/brandons-plays" element={<MyPlays />} />
       </Routes>
@@ -43,6 +45,7 @@ function App() {
         <Route path="/:userId/brm-tracker" element={<UserTrackers />} />
         <Route path="/new-tracker" element={<NewTrackerPage />} />
         <Route path="/update-tracker/:tid" element={<UpdateTrackerPage />} />
+        <Route path="/add-transaction/:tid" element={<AddTransactionPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/brandons-plays" element={<MyPlays />} />
       </Routes>
@@ -52,7 +55,8 @@ function App() {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token: token,
         userId: userId,
         login: login,
         logout: logout,

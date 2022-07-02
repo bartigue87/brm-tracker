@@ -27,7 +27,7 @@ const TrackerList = (props) => {
           net={tracker.net}
           history={tracker.history}
           creatorId={tracker.creator}
-          onDelete={props.onDeletePlace}
+          onDelete={props.onDeleteTracker}
         />
       ))}
     </>

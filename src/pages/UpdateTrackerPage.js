@@ -96,7 +96,10 @@ export default function UpdateTrackerPage() {
           withdrawals: formState.inputs.withdrawals.value,
           currentBalance: formState.inputs.currentBalance.value,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        }
       );
       handleRedirect();
     } catch (err) {}
