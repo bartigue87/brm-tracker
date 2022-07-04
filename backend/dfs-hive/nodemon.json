@@ -1,8 +1,0 @@
-{
-  "env": {
-    "DB_USER": "brandon87",
-    "DB_PASSWORD": "password87",
-    "DB_NAME": "trackers",
-    "JWT_KEY": "supersonic_acrobatic_rocket_powered_battle_cars"
-  }
-}

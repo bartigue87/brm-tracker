@@ -21,7 +21,7 @@ export default function AddTransactionPage() {
     const fetchTracker = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`
+          `https://dfshive.herokuapp.com/api/trackers/${trackerId}`
         );
         setLoadedTracker(responseData.tracker);
       } catch (err) {}

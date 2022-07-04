@@ -31,7 +31,7 @@ export default function Tracker(props) {
   async function submitDelete() {
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`,
+        `https://dfshive.herokuapp.com/api/trackers/${trackerId}`,
         "DELETE",
         null,
         { Authorization: `Bearer ${auth.token}` }

@@ -51,7 +51,7 @@ export default function NewTrackerPage() {
     event.preventDefault();
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/trackers`,
+        `https://dfshive.herokuapp.com/api/trackers`,
         "POST",
         JSON.stringify({
           title: formState.inputs.title.value,

@@ -42,7 +42,7 @@ export default function AddTransactionItem(props) {
   async function addWithdrawalToHistory() {
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/history`,
+        `https://dfshive.herokuapp.com/api/history`,
         "POST",
         JSON.stringify({
           title: "Withdrawal",
@@ -57,7 +57,7 @@ export default function AddTransactionItem(props) {
   async function addDepositToHistory() {
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/history`,
+        `https://dfshive.herokuapp.com/api/history`,
         "POST",
         JSON.stringify({
           title: "Deposit",
@@ -92,7 +92,7 @@ export default function AddTransactionItem(props) {
     event.preventDefault();
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`,
+        `https://dfshive.herokuapp.com/api/trackers/${trackerId}`,
         "PATCH",
         JSON.stringify({
           title: props.title,

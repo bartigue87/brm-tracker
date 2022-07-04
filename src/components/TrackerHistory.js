@@ -11,7 +11,7 @@ const TrackerHistory = (props) => {
     const fetchHistory = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/history/tracker/${trackerId}`
+          `https://dfshive.herokuapp.com/api/history/tracker/${trackerId}`
         );
         setLoadedHistory(responseData.history);
       } catch (err) {}

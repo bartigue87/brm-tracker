@@ -26,7 +26,7 @@ export default function UserTrackers() {
     const fetchTrackers = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/trackers/user/${userId}`
+          `https://dfshive.herokuapp.com/api/trackers/user/${userId}`
         );
         setLoadedTrackers(responseData.trackers);
         setGridLength(responseData.trackers.length);
