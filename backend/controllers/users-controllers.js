@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-const { createHistory } = require("./history-controllers");
 
 const getUsers = async (req, res, next) => {
   let users;
