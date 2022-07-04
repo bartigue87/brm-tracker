@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 
-const usersRoutes = require("./routes/users-routes");
-const trackerRoutes = require("./routes/tracker-routes");
-const historyRoutes = require("./routes/history-routes");
-const HttpError = require("./models/http-error");
+const usersRoutes = require("./backend/routes/users-routes");
+const trackerRoutes = require("./backend/routes/tracker-routes");
+const historyRoutes = require("./backend/routes/history-routes");
+const HttpError = require("./backend/models/http-error");
 require("dotenv").config();
 
 const app = express();
@@ -50,3 +50,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}

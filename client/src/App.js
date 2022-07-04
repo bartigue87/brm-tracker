@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthContext } from "../src/util/auth-context";
+import { AuthContext } from "./util/auth-context";
 import LoadingSpinner from "./UIElements/LoadingSpinner";
 import { useAuth } from "./util/auth-hook";
 
