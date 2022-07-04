@@ -50,7 +50,7 @@ mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.yzdi30j.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(5002);
+    app.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
     console.log(err);
