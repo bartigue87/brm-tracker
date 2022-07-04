@@ -70,7 +70,7 @@ const signup = async (req, res, next) => {
   try {
     token = jwt.sign(
       { userId: newUser.id, email: newUser.email },
-      "supersonic_acrobatic_rocket_powered_battle_cars",
+      process.env.JWT_KEY,
       { expiresIn: "1h" }
     );
   } catch (err) {
@@ -93,7 +93,7 @@ const login = async (req, res, next) => {
   }
 
   if (!existingUser) {
-    const error = new HttpError("User does not exist", 401);
+    const error = new HttpError("User does not exist", 403);
     return next(error);
   }
 
@@ -122,7 +122,7 @@ const login = async (req, res, next) => {
   try {
     token = jwt.sign(
       { userId: existingUser.id, email: existingUser.email },
-      "supersonic_acrobatic_rocket_powered_battle_cars",
+      process.env.JWT_KEY,
       { expiresIn: "1h" }
     );
   } catch (err) {

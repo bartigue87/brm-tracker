@@ -54,7 +54,7 @@ export default function UpdateTrackerPage() {
     const fetchTracker = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5002/api/trackers/${trackerId}`
+          `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`
         );
         console.log("responseData", responseData);
         setLoadedTracker(responseData.tracker);
@@ -88,7 +88,7 @@ export default function UpdateTrackerPage() {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5002/api/trackers/${trackerId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,

@@ -21,7 +21,7 @@ export default function AddTransactionPage() {
     const fetchTracker = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5002/api/trackers/${trackerId}`
+          `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`
         );
         setLoadedTracker(responseData.tracker);
       } catch (err) {}

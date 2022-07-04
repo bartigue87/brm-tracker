@@ -59,7 +59,7 @@ const createTracker = async (req, res, next) => {
     throw new HttpError("Invalid inputs passed, please check your data");
   }
 
-  const { title, deposit, withdrawals, currentBalance, creator } = req.body;
+  const { title, deposit, withdrawals, currentBalance } = req.body;
 
   let net = Number(currentBalance) - Number(deposit) + Number(withdrawals);
 
@@ -70,13 +70,13 @@ const createTracker = async (req, res, next) => {
     net,
     currentBalance,
     history: [],
-    creator,
+    creator: req.userData.userId,
   });
 
   let user;
 
   try {
-    user = await User.findById(creator);
+    user = await User.findById(req.userData.userId);
   } catch (err) {
     const error = new HttpError(
       "Creating tracker failed, please try again later",
@@ -114,7 +114,7 @@ const updateTracker = async (req, res, next) => {
     throw new HttpError("Invalid inputs passed, please check your data");
   }
 
-  const { title, deposit, withdrawals, currentBalance } = req.body;
+  const { title, deposit, withdrawals, currentBalance, net } = req.body;
   const trackerId = req.params.tid;
 
   let tracker;
@@ -129,10 +129,19 @@ const updateTracker = async (req, res, next) => {
     return next(error);
   }
 
+  if (tracker.creator.toString() !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not authorized to make changes to this tracker",
+      401
+    );
+    return next(error);
+  }
+
   tracker.title = title;
   tracker.deposit = deposit;
   tracker.withdrawals = withdrawals;
   tracker.currentBalance = currentBalance;
+  tracker.net = net;
 
   try {
     await tracker.save();
@@ -164,6 +173,14 @@ const deleteTracker = async (req, res, next) => {
 
   if (!tracker) {
     const error = new HttpError("Could not find tracker for this Id", 404);
+    return next(error);
+  }
+
+  if (tracker.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not authorized to make delete this tracker",
+      401
+    );
     return next(error);
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NewTrackerPage from "./pages/NewTrackerPage";
 import UserTrackers from "./pages/UserTrackers";
@@ -8,20 +8,10 @@ import MyPlays from "./pages/MyPlays";
 import { AuthContext } from "../src/util/auth-context";
 import UpdateTrackerPage from "./pages/UpdateTrackerPage";
 import AddTransactionPage from "./pages/AddTransactionPage";
+import { useAuth } from "./util/auth-hook";
 
 function App() {
-  const [token, setToken] = useState(false);
-  const [userId, setUserId] = useState(false);
-
-  const login = useCallback((uid, token) => {
-    setToken(token);
-    setUserId(uid);
-  }, []);
-
-  const logout = useCallback(() => {
-    setToken(null);
-    setUserId(null);
-  }, []);
+  const { login, logout, token, userId } = useAuth();
 
   let routes;
 

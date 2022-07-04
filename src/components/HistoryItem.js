@@ -7,7 +7,7 @@ export default function HitoryItem(props) {
   async function submitDelete() {
     try {
       await sendRequest(
-        `http://localhost:5002/api/history/${props.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/history/${props.id}`,
         "DELETE"
       );
       props.onDelete(props.id);

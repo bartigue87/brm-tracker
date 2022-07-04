@@ -11,7 +11,7 @@ const TrackerHistory = (props) => {
     const fetchHistory = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5002/api/history/tracker/${trackerId}`
+          `${process.env.REACT_APP_BACKEND_URL}/history/tracker/${trackerId}`
         );
         setLoadedHistory(responseData.history);
       } catch (err) {}

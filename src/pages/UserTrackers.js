@@ -26,7 +26,7 @@ export default function UserTrackers() {
     const fetchTrackers = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5002/api/trackers/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/trackers/user/${userId}`
         );
         setLoadedTrackers(responseData.trackers);
         setGridLength(responseData.trackers.length);

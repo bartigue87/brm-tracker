@@ -42,7 +42,7 @@ export default function AddTransactionItem(props) {
   async function addWithdrawalToHistory() {
     try {
       await sendRequest(
-        "http://localhost:5002/api/history",
+        `${process.env.REACT_APP_BACKEND_URL}/history`,
         "POST",
         JSON.stringify({
           title: "Withdrawal",
@@ -57,7 +57,7 @@ export default function AddTransactionItem(props) {
   async function addDepositToHistory() {
     try {
       await sendRequest(
-        "http://localhost:5002/api/history",
+        `${process.env.REACT_APP_BACKEND_URL}/history`,
         "POST",
         JSON.stringify({
           title: "Deposit",
@@ -92,7 +92,7 @@ export default function AddTransactionItem(props) {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5002/api/trackers/${trackerId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`,
         "PATCH",
         JSON.stringify({
           title: props.title,
@@ -100,12 +100,20 @@ export default function AddTransactionItem(props) {
           withdrawals:
             props.withdrawals + Number(formState.inputs.withdrawals.value),
           currentBalance: Number(formState.inputs.currentBalance.value),
+          net:
+            Number(formState.inputs.currentBalance.value) -
+            (props.deposit + Number(formState.inputs.deposit.value)) +
+            (props.withdrawals + Number(formState.inputs.withdrawals.value)),
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        }
       );
       updateHistory();
       setTimeout(() => {
         handleRedirect();
+        window.location.reload();
       }, [600]);
     } catch (err) {}
   };

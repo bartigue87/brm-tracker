@@ -51,14 +51,13 @@ export default function NewTrackerPage() {
     event.preventDefault();
     try {
       await sendRequest(
-        "http://localhost:5002/api/trackers",
+        `${process.env.REACT_APP_BACKEND_URL}/trackers`,
         "POST",
         JSON.stringify({
           title: formState.inputs.title.value,
           deposit: formState.inputs.deposit.value,
           withdrawals: formState.inputs.withdrawals.value,
           currentBalance: formState.inputs.currentBalance.value,
-          creator: auth.userId,
         }),
         {
           "Content-Type": "application/json",

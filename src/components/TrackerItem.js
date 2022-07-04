@@ -31,12 +31,13 @@ export default function Tracker(props) {
   async function submitDelete() {
     try {
       await sendRequest(
-        `http://localhost:5002/api/trackers/${trackerId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/trackers/${trackerId}`,
         "DELETE",
         null,
         { Authorization: `Bearer ${auth.token}` }
       );
       props.onDelete(props.id);
+      window.location.reload();
     } catch (err) {}
   }
 
