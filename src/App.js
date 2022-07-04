@@ -1,14 +1,18 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NewTrackerPage from "./pages/NewTrackerPage";
-import UserTrackers from "./pages/UserTrackers";
-import Auth from "./pages/Auth";
-import ArticlesPage from "./pages/ArticlesPage";
-import MyPlays from "./pages/MyPlays";
 import { AuthContext } from "../src/util/auth-context";
-import UpdateTrackerPage from "./pages/UpdateTrackerPage";
-import AddTransactionPage from "./pages/AddTransactionPage";
+import LoadingSpinner from "./UIElements/LoadingSpinner";
 import { useAuth } from "./util/auth-hook";
+
+const UpdateTrackerPage = React.lazy(() => import("./pages/UpdateTrackerPage"));
+const MyPlays = React.lazy(() => import("./pages/MyPlays"));
+const ArticlesPage = React.lazy(() => import("./pages/ArticlesPage"));
+const AddTransactionPage = React.lazy(() =>
+  import("./pages/AddTransactionPage")
+);
+const NewTrackerPage = React.lazy(() => import("./pages/NewTrackerPage"));
+const Auth = React.lazy(() => import("./pages/Auth"));
+const UserTrackers = React.lazy(() => import("./pages/UserTrackers"));
 
 function App() {
   const { login, logout, token, userId } = useAuth();
@@ -52,7 +56,17 @@ function App() {
         logout: logout,
       }}
     >
-      <Router>{routes}</Router>
+      <Router>
+        <Suspense
+          fallback={
+            <div className="center">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          {routes}
+        </Suspense>
+      </Router>
     </AuthContext.Provider>
   );
 }
